@@ -387,20 +387,110 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── PRICING ─── */}
-      <section id="pricing" className="section" style={{ background: "var(--petal)" }}>
+      {/* ─── RESULTS ─── */}
+      <section className="section" style={{ background: "var(--white)" }}>
         <div className="container">
-          <div style={{ textAlign: "center", marginBottom: "72px" }}>
-            <span className="pill">Pricing</span>
+          <div style={{ textAlign: "center", marginBottom: "72px", maxWidth: "640px", marginInline: "auto" }}>
+            <span className="pill">Results</span>
             <h2 className="font-palatino" style={{
               fontSize: "clamp(28px, 3.5vw, 44px)",
               fontWeight: 400,
               color: "var(--forest)",
               letterSpacing: "-0.3px",
-              margin: 0,
+              margin: "0 0 20px",
+              lineHeight: 1.2,
             }}>
-              Simple, honest pricing
+              Built to move the numbers that matter.
             </h2>
+            <p style={{ fontSize: "16px", color: "var(--moss)", lineHeight: 1.7, margin: 0 }}>
+              Stellr isn&apos;t a chatbot. It&apos;s a system for growing covers, protecting your rating, and turning first-time diners into regulars.
+            </p>
+          </div>
+
+          <div className="results-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "24px" }}>
+            {[
+              {
+                stat: "+9%",
+                statLabel: "Revenue per 0.1★ rating",
+                title: "More bookings, higher spend.",
+                body: "Diners pick higher-rated restaurants and pay more once they arrive. Every Stellr-driven star translates to measurable top-line growth.",
+              },
+              {
+                stat: "3×",
+                statLabel: "Return-visit lift",
+                title: "Turn one-time diners into regulars.",
+                body: "Personal, on-brand replies make every guest feel seen. That&apos;s the single biggest driver of repeat visits — and the cheapest customer retention you can buy.",
+              },
+              {
+                stat: "<2hr",
+                statLabel: "Negative review response",
+                title: "Stop churn before it spreads.",
+                body: "One unanswered 1-star review can cost you 30 future covers. We alert you the moment it lands and respond fast — before the damage compounds.",
+              },
+              {
+                stat: "0",
+                statLabel: "Hours of staff time",
+                title: "Your team focuses on service.",
+                body: "No more managers writing review replies on their phones. Stellr handles the keyboard so your floor staff handle the guest in front of them.",
+              },
+            ].map((item, i) => (
+              <div key={i} className="card" style={{ padding: "36px 36px" }}>
+                <div style={{ display: "flex", alignItems: "baseline", gap: "16px", marginBottom: "20px", paddingBottom: "20px", borderBottom: "1px solid var(--divider)" }}>
+                  <span className="font-palatino" style={{
+                    fontSize: "44px",
+                    fontWeight: 400,
+                    color: "var(--sage)",
+                    lineHeight: 1,
+                    letterSpacing: "-1px",
+                  }}>
+                    {item.stat}
+                  </span>
+                  <span style={{
+                    fontSize: "11px",
+                    letterSpacing: "1.3px",
+                    textTransform: "uppercase",
+                    color: "var(--moss)",
+                    fontFamily: "system-ui",
+                  }}>
+                    {item.statLabel}
+                  </span>
+                </div>
+                <h3 className="font-palatino" style={{
+                  fontSize: "22px",
+                  fontWeight: 400,
+                  color: "var(--forest)",
+                  margin: "0 0 12px",
+                  lineHeight: 1.3,
+                }}>
+                  {item.title}
+                </h3>
+                <p style={{ fontSize: "15px", color: "var(--moss)", lineHeight: 1.7, margin: 0 }}>
+                  {item.body}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── PRICING ─── */}
+      <section id="pricing" className="section" style={{ background: "var(--petal)" }}>
+        <div className="container">
+          <div style={{ textAlign: "center", marginBottom: "72px", maxWidth: "640px", marginInline: "auto" }}>
+            <span className="pill">Plans</span>
+            <h2 className="font-palatino" style={{
+              fontSize: "clamp(28px, 3.5vw, 44px)",
+              fontWeight: 400,
+              color: "var(--forest)",
+              letterSpacing: "-0.3px",
+              margin: "0 0 20px",
+              lineHeight: 1.2,
+            }}>
+              Two ways to grow with Stellr.
+            </h2>
+            <p style={{ fontSize: "16px", color: "var(--moss)", lineHeight: 1.7, margin: 0 }}>
+              Pricing is tailored to your restaurant&apos;s size and table count. Talk to us for a quote — no sales pitch, no pressure.
+            </p>
           </div>
 
           <div className="pricing-grid" style={{ display: "flex", gap: "24px", justifyContent: "center" }}>
@@ -413,20 +503,20 @@ export default function Home() {
               width: "420px",
               flex: "0 0 auto",
             }}>
-              <p style={{ fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "var(--moss)", marginBottom: "20px", fontFamily: "system-ui" }}>
+              <p style={{ fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "var(--moss)", marginBottom: "16px", fontFamily: "system-ui" }}>
                 Standard
               </p>
-              <div style={{ marginBottom: "4px" }}>
-                <span className="font-palatino" style={{ fontSize: "46px", fontWeight: 400, color: "var(--forest)" }}>
-                  Rs 6,000
-                </span>
-              </div>
-              <p style={{ fontSize: "13px", color: "var(--moss)", marginBottom: "32px" }}>/month · billed monthly</p>
+              <h3 className="font-palatino" style={{ fontSize: "28px", fontWeight: 400, color: "var(--forest)", margin: "0 0 10px", lineHeight: 1.25 }}>
+                For independent restaurants ready to compete on rating.
+              </h3>
+              <p style={{ fontSize: "15px", color: "var(--moss)", lineHeight: 1.7, marginBottom: "28px" }}>
+                Get every Google review answered automatically, drive new reviews from every table, and watch your star rating climb.
+              </p>
               <div style={{ borderTop: "1px solid var(--divider)", paddingTop: "28px" }}>
                 {[
-                  "AI review replies",
+                  "AI review replies in your voice",
                   "1 Stellr-branded QR stand (free on 3-month commit)",
-                  "Monthly auto report",
+                  "Monthly performance report",
                   "Email support",
                 ].map((item, i) => (
                   <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "12px", marginBottom: "16px" }}>
@@ -439,7 +529,7 @@ export default function Home() {
                 ))}
               </div>
               <a href="/get-started" className="btn-primary" style={{ display: "block", textAlign: "center", marginTop: "32px" }}>
-                Get started
+                Talk to us
               </a>
             </div>
 
@@ -470,23 +560,23 @@ export default function Home() {
               }}>
                 Recommended
               </div>
-              <p style={{ fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: "20px", fontFamily: "system-ui" }}>
+              <p style={{ fontSize: "11px", letterSpacing: "1.5px", textTransform: "uppercase", color: "rgba(255,255,255,0.35)", marginBottom: "16px", fontFamily: "system-ui" }}>
                 White-label
               </p>
-              <div style={{ marginBottom: "4px" }}>
-                <span className="font-palatino" style={{ fontSize: "46px", fontWeight: 400, color: "var(--white)" }}>
-                  Rs 12,000
-                </span>
-              </div>
-              <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.35)", marginBottom: "32px" }}>/month · billed monthly</p>
+              <h3 className="font-palatino" style={{ fontSize: "28px", fontWeight: 400, color: "var(--white)", margin: "0 0 10px", lineHeight: 1.25 }}>
+                For premium groups protecting a brand.
+              </h3>
+              <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.6)", lineHeight: 1.7, marginBottom: "28px" }}>
+                Everything in Standard, fully under your name. Faster response speed, deeper voice training, and zero Stellr branding visible to your guests.
+              </p>
               <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "28px" }}>
                 {[
                   "Everything in Standard",
-                  "Fully restaurant-branded stand (no Stellr logo)",
-                  "AI trained to your restaurant's voice",
+                  "Fully restaurant-branded stand — no Stellr logo",
+                  "AI deep-trained on your restaurant's voice",
                   "Branded monthly report",
                   "WhatsApp support",
-                  "Priority reply speed",
+                  "Priority reply speed for negative reviews",
                 ].map((item, i) => (
                   <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: "12px", marginBottom: "16px" }}>
                     <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ marginTop: "2px", flexShrink: 0 }}>
@@ -504,13 +594,13 @@ export default function Home() {
                 background: "var(--sage)",
                 color: "var(--forest)",
               }}>
-                Get started
+                Talk to us
               </a>
             </div>
           </div>
 
           <p style={{ textAlign: "center", marginTop: "36px", fontSize: "14px", color: "var(--moss)" }}>
-            Stand included free on 3-month commitment. No setup fees. No contracts.
+            QR stands included free on a 3-month commitment. No setup fees. No long contracts.
           </p>
         </div>
       </section>

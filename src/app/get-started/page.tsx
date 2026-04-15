@@ -30,7 +30,7 @@ export default function GetStarted() {
       `Restaurant: ${restaurant}`,
       `City: ${city}`,
       `WhatsApp: ${whatsapp}`,
-      `Plan: ${plan === "white-label" ? "White-label (Rs 12,000/mo)" : "Standard (Rs 6,000/mo)"}`,
+      `Plan interest: ${plan === "white-label" ? "White-label" : "Standard"}`,
       message ? `\nMessage:\n${message}` : "",
     ].filter(Boolean).join("\n");
 
@@ -219,8 +219,8 @@ export default function GetStarted() {
                   <label className="form-label" style={{ marginBottom: "12px", display: "block" }}>Which plan?</label>
                   <div style={{ display: "flex", gap: "12px" }}>
                     {[
-                      { value: "standard", label: "Standard", price: "Rs 6,000/mo" },
-                      { value: "white-label", label: "White-label", price: "Rs 12,000/mo" },
+                      { value: "standard", label: "Standard", desc: "Independent restaurant" },
+                      { value: "white-label", label: "White-label", desc: "Premium / multi-location" },
                     ].map((option) => (
                       <button
                         key={option.value}
@@ -257,7 +257,7 @@ export default function GetStarted() {
                           color: "var(--moss)",
                           fontFamily: "system-ui",
                         }}>
-                          {option.price}
+                          {option.desc}
                         </span>
                       </button>
                     ))}

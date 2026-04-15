@@ -265,6 +265,10 @@ textarea.form-input {
     grid-template-columns: 1fr !important;
   }
 
+  .results-grid {
+    grid-template-columns: 1fr !important;
+  }
+
   .market-grid > div {
     border-right: none !important;
     padding-left: 0 !important;
