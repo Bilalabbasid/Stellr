@@ -96,6 +96,7 @@ export default function GetStarted() {
     const data = new FormData(e.currentTarget);
     const name = data.get("name") as string;
     const restaurant = data.get("restaurant") as string;
+    const email = data.get("email") as string;
     const city = data.get("city") as string;
     const whatsapp = data.get("whatsapp") as string;
     const message = data.get("message") as string;
@@ -108,6 +109,7 @@ export default function GetStarted() {
         body: JSON.stringify({
           name,
           restaurant,
+          email,
           country,
           city,
           whatsapp: `${whatsappCode} ${whatsapp}`,
@@ -268,6 +270,18 @@ export default function GetStarted() {
                     type="text"
                     required
                     placeholder="Monal, Savour, ..."
+                    className="form-input"
+                  />
+                </div>
+
+                {/* Email */}
+                <div>
+                  <label className="form-label">Email</label>
+                  <input
+                    name="email"
+                    type="email"
+                    required
+                    placeholder="you@example.com"
                     className="form-input"
                   />
                 </div>

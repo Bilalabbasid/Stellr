@@ -514,6 +514,7 @@ function EnquiriesView() {
 
               <div className="flex flex-wrap gap-2 text-sm text-gray-600 mb-3">
                 {e.country && <span>📍 {e.country}{e.city ? `, ${e.city}` : ''}</span>}
+                {e.email && <span>✉️ {e.email}</span>}
                 {e.whatsapp && <span>📱 {e.whatsapp}</span>}
                 {e.plan && <span>📦 {e.plan}</span>}
               </div>

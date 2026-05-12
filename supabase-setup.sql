@@ -61,6 +61,7 @@ create table enquiries (
   id uuid primary key default gen_random_uuid(),
   name text not null,
   restaurant text not null,
+  email text,
   country text,
   city text,
   whatsapp text,

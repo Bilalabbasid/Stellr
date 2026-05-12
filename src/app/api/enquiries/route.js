@@ -39,6 +39,7 @@ export async function POST(request) {
 
   const name = sanitize(body.name, 200)
   const restaurant = sanitize(body.restaurant, 200)
+  const email = sanitize(body.email, 200)
   const country = sanitize(body.country, 100)
   const city = sanitize(body.city, 100)
   const whatsapp = sanitize(body.whatsapp, 30)
@@ -56,7 +57,7 @@ export async function POST(request) {
 
   const { data, error } = await supabase
     .from('enquiries')
-    .insert({ name, restaurant, country, city, whatsapp, plan, message })
+    .insert({ name, restaurant, email, country, city, whatsapp, plan, message })
     .select('id')
     .single()
 
