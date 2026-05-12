@@ -2,6 +2,74 @@
 
 import { useState } from "react";
 
+const COUNTRIES = [
+  { name: "Afghanistan", code: "+93" },
+  { name: "Albania", code: "+355" },
+  { name: "Algeria", code: "+213" },
+  { name: "Argentina", code: "+54" },
+  { name: "Australia", code: "+61" },
+  { name: "Austria", code: "+43" },
+  { name: "Bahrain", code: "+973" },
+  { name: "Bangladesh", code: "+880" },
+  { name: "Belgium", code: "+32" },
+  { name: "Brazil", code: "+55" },
+  { name: "Canada", code: "+1" },
+  { name: "Chile", code: "+56" },
+  { name: "China", code: "+86" },
+  { name: "Colombia", code: "+57" },
+  { name: "Czech Republic", code: "+420" },
+  { name: "Denmark", code: "+45" },
+  { name: "Egypt", code: "+20" },
+  { name: "Finland", code: "+358" },
+  { name: "France", code: "+33" },
+  { name: "Germany", code: "+49" },
+  { name: "Greece", code: "+30" },
+  { name: "Hong Kong", code: "+852" },
+  { name: "Hungary", code: "+36" },
+  { name: "India", code: "+91" },
+  { name: "Indonesia", code: "+62" },
+  { name: "Iran", code: "+98" },
+  { name: "Iraq", code: "+964" },
+  { name: "Ireland", code: "+353" },
+  { name: "Israel", code: "+972" },
+  { name: "Italy", code: "+39" },
+  { name: "Japan", code: "+81" },
+  { name: "Jordan", code: "+962" },
+  { name: "Kenya", code: "+254" },
+  { name: "Kuwait", code: "+965" },
+  { name: "Lebanon", code: "+961" },
+  { name: "Malaysia", code: "+60" },
+  { name: "Mexico", code: "+52" },
+  { name: "Morocco", code: "+212" },
+  { name: "Netherlands", code: "+31" },
+  { name: "New Zealand", code: "+64" },
+  { name: "Nigeria", code: "+234" },
+  { name: "Norway", code: "+47" },
+  { name: "Oman", code: "+968" },
+  { name: "Pakistan", code: "+92" },
+  { name: "Peru", code: "+51" },
+  { name: "Philippines", code: "+63" },
+  { name: "Poland", code: "+48" },
+  { name: "Portugal", code: "+351" },
+  { name: "Qatar", code: "+974" },
+  { name: "Romania", code: "+40" },
+  { name: "Russia", code: "+7" },
+  { name: "Saudi Arabia", code: "+966" },
+  { name: "Singapore", code: "+65" },
+  { name: "South Africa", code: "+27" },
+  { name: "South Korea", code: "+82" },
+  { name: "Spain", code: "+34" },
+  { name: "Sri Lanka", code: "+94" },
+  { name: "Sweden", code: "+46" },
+  { name: "Switzerland", code: "+41" },
+  { name: "Thailand", code: "+66" },
+  { name: "Turkey", code: "+90" },
+  { name: "UAE", code: "+971" },
+  { name: "UK", code: "+44" },
+  { name: "USA", code: "+1" },
+  { name: "Vietnam", code: "+84" },
+];
+
 const LogoStar = () => (
   <svg width="26" height="26" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
     <polygon points="16,3 19.5,11.5 28.5,12.5 22,18.5 23.8,27.5 16,23 8.2,27.5 10,18.5 3.5,12.5 12.5,11.5"
@@ -14,6 +82,14 @@ const LogoStar = () => (
 export default function GetStarted() {
   const [plan, setPlan] = useState<"standard" | "white-label">("standard");
   const [submitted, setSubmitted] = useState(false);
+  const [country, setCountry] = useState("");
+  const [whatsappCode, setWhatsappCode] = useState("");
+
+  function handleCountryChange(value: string) {
+    setCountry(value);
+    const found = COUNTRIES.find((c) => c.name === value);
+    if (found) setWhatsappCode(found.code);
+  }
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -28,8 +104,9 @@ export default function GetStarted() {
     const body = [
       `Name: ${name}`,
       `Restaurant: ${restaurant}`,
+      `Country: ${country}`,
       `City: ${city}`,
-      `WhatsApp: ${whatsapp}`,
+      `WhatsApp: ${whatsappCode} ${whatsapp}`,
       `Plan interest: ${plan === "white-label" ? "White-label" : "Standard"}`,
       message ? `\nMessage:\n${message}` : "",
     ].filter(Boolean).join("\n");
@@ -190,28 +267,56 @@ export default function GetStarted() {
                   />
                 </div>
 
+                {/* Country */}
+                <div>
+                  <label className="form-label">Country</label>
+                  <select
+                    name="country"
+                    required
+                    className="form-input"
+                    value={country}
+                    onChange={(e) => handleCountryChange(e.target.value)}
+                  >
+                    <option value="" disabled>Select country</option>
+                    {COUNTRIES.map((c) => (
+                      <option key={c.name} value={c.name}>{c.name}</option>
+                    ))}
+                  </select>
+                </div>
+
                 {/* City */}
                 <div>
                   <label className="form-label">City</label>
-                  <select name="city" required className="form-input" defaultValue="">
-                    <option value="" disabled>Select city</option>
-                    <option value="Islamabad">Islamabad</option>
-                    <option value="Lahore">Lahore</option>
-                    <option value="Karachi">Karachi</option>
-                    <option value="Other">Other</option>
-                  </select>
+                  <input
+                    name="city"
+                    type="text"
+                    required
+                    placeholder="Enter your city"
+                    className="form-input"
+                  />
                 </div>
 
                 {/* WhatsApp */}
                 <div>
                   <label className="form-label">WhatsApp number</label>
-                  <input
-                    name="whatsapp"
-                    type="tel"
-                    required
-                    placeholder="03XX XXXXXXX"
-                    className="form-input"
-                  />
+                  <div style={{ display: "flex", gap: "8px" }}>
+                    <input
+                      type="text"
+                      readOnly
+                      value={whatsappCode}
+                      placeholder="+__"
+                      className="form-input"
+                      style={{ width: "72px", flexShrink: 0, textAlign: "center", background: "#f9f9f9" }}
+                    />
+                    <input
+                      name="whatsapp"
+                      type="tel"
+                      required
+                      placeholder="Phone number"
+                      className="form-input"
+                      style={{ flex: 1 }}
+                    />
+                  </div>
                 </div>
 
                 {/* Plan */}
