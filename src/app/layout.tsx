@@ -6,23 +6,23 @@ const SITE = "https://stellr.biz";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE),
   title: {
-    default: "Stellr — AI Reputation Management for Premium Restaurants in Pakistan",
+    default: "Stellr — AI Reputation Management for Restaurants",
     template: "%s · Stellr",
   },
   description:
-    "Stellr automates Google review responses for premium restaurants in Islamabad, Lahore & Karachi. Grow your star rating, turn diners into regulars, and protect your brand — on autopilot.",
+    "Stellr automates Google review responses for restaurants worldwide. Grow your star rating, turn diners into regulars, and protect your brand — on autopilot.",
   applicationName: "Stellr",
   keywords: [
-    "restaurant reputation management Pakistan",
+    "restaurant reputation management",
     "Google review automation",
     "AI review replies",
-    "restaurant marketing Islamabad",
-    "restaurant marketing Lahore",
-    "restaurant marketing Karachi",
+    "restaurant marketing",
     "QR code review stand",
     "restaurant Google rating",
     "reputation management for restaurants",
-    "premium restaurants Pakistan",
+    "online review management",
+    "restaurant review response",
+    "AI reputation management",
   ],
   authors: [{ name: "Bilal Abbasi", url: SITE }],
   creator: "Bilal Abbasi",
@@ -32,18 +32,18 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    locale: "en_PK",
+    locale: "en_US",
     url: SITE,
     siteName: "Stellr",
     title: "Stellr — Reputation · Elevated",
     description:
-      "AI-powered Google review automation and premium QR table stands for Pakistan's top restaurants. Grow your rating on autopilot.",
+      "AI-powered Google review automation and premium QR table stands for restaurants. Grow your rating on autopilot.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Stellr — Reputation · Elevated",
     description:
-      "AI-powered Google review automation for premium restaurants in Pakistan. Grow your rating on autopilot.",
+      "AI-powered Google review automation for restaurants. Grow your rating on autopilot.",
   },
   robots: {
     index: true,
@@ -74,18 +74,16 @@ const organizationJsonLd = {
   url: SITE,
   logo: `${SITE}/icon.svg`,
   description:
-    "AI-powered reputation management platform for premium restaurants in Pakistan. Automates Google review responses and provides premium QR stands for tables.",
+    "AI-powered reputation management platform for restaurants. Automates Google review responses and provides premium QR stands for tables.",
   email: "bilal@stellr.biz",
   founder: {
     "@type": "Person",
     name: "Bilal Abbasi",
     jobTitle: "Founder & CEO",
   },
-  foundingDate: "2025",
+  foundingDate: "2026",
   areaServed: [
-    { "@type": "City", name: "Islamabad" },
-    { "@type": "City", name: "Lahore" },
-    { "@type": "City", name: "Karachi" },
+    { "@type": "Place", name: "Worldwide" },
   ],
   address: {
     "@type": "PostalAddress",

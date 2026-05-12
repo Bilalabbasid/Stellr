@@ -1,0 +1,219 @@
+Here is your detailed Copilot prompt. Copy everything below:
+
+---
+
+I have a Next.js 14 app router website already built with Tailwind CSS as a landing page. It is deployed at stellr.biz. Do not modify any existing pages, components, layouts, or styles. Only add new files and features alongside what already exists. Use the app router pattern with server and client components correctly.
+
+---
+
+**BACKGROUND CONTEXT**
+
+I run a SaaS called Stellr. We help restaurants manage and grow their Google reviews. When a restaurant signs up with us we create a page for them at stellr.biz/r/their-name. We print a physical QR code sticker for that restaurant which simply points to their unique URL. The customer scans the QR code, lands on the restaurant's branded page, rates their experience, and either gets sent to Google to leave a public review or submits a private complaint that only we see. We collect all complaints in our internal dashboard and send weekly WhatsApp reports to the restaurant owner. The restaurant owner never sees our dashboard. They only receive a WhatsApp message from us once a week summarising what customers said.
+
+---
+
+**STEP 1 — SUPABASE SETUP**
+
+Install the Supabase client:
+```
+npm install @supabase/supabase-js
+```
+
+Create lib/supabase.js as a client-side Supabase instance.
+
+Create lib/supabase-server.js as a server-side Supabase instance for use in server components and API routes.
+
+Add the following to .env.local — I will fill in the actual values from my Supabase dashboard under Project Settings then API:
+```
+NEXT_PUBLIC_SUPABASE_URL=
+NEXT_PUBLIC_SUPABASE_ANON_KEY=
+DASHBOARD_PASSWORD=stellradmin2024
+ONBOARD_PASSWORD=stellronboard2024
+```
+
+Give me the complete SQL to run once in the Supabase SQL editor to create all tables, indexes, and security policies:
+
+```sql
+-- Restaurants table
+-- Each row is one restaurant we manage
+create table restaurants (
+  id uuid primary key default gen_random_uuid(),
+  slug text unique not null,
+  -- slug is what appears in the URL: stellr.biz/r/[slug]
+  -- must be lowercase, no spaces, use hyphens e.g. chaaye-khana
+  name text not null,
+  -- the restaurant's public display name shown to customers
+  logo_url text,
+  -- full URL to their logo, hosted anywhere, shown on their funnel page
+  google_review_url text not null,
+  -- the direct Google review link where happy customers get redirected
+  -- format: https://search.google.com/local/writereview?placeid=XXXXX
+  owner_name text,
+  owner_email text,
+  owner_whatsapp text,
+  -- owner_whatsapp in international format e.g. 923001234567
+  active boolean default true,
+  -- if false, the funnel page shows a generic message instead
+  created_at timestamp with time zone default now()
+);
+
+-- Feedback table
+-- Every customer interaction is stored here whether positive or negative
+create table feedback (
+  id uuid primary key default gen_random_uuid(),
+  restaurant_id uuid references restaurants(id) on delete cascade,
+  rating text not null,
+  -- values: excellent, good, okay, poor, terrible
+  redirected_to_google boolean default false,
+  -- true if the customer was sent to Google reviews
+  complaint_text text,
+  -- only filled if rating is okay, poor, or terrible
+  complaint_tags text[],
+  -- array of selected tags from: food_quality, staff_behaviour,
+  -- service_speed, cleanliness, pricing, other
+  customer_ip text,
+  -- store anonymised IP for basic spam prevention
+  created_at timestamp with time zone default now()
+);
+
+-- Index for fast lookups by restaurant and date
+create index on feedback (restaurant_id, created_at desc);
+create index on restaurants (slug);
+
+-- Row level security
+alter table restaurants enable row level security;
+alter table feedback enable row level security;
+
+-- Anyone can read restaurant data so the funnel page loads without auth
+create policy "Public read restaurants"
+  on restaurants for select using (true);
+
+-- Anyone can submit feedback so customers do not need to log in
+create policy "Public insert feedback"
+  on feedback for insert with check (true);
+
+-- Anyone can read feedback for the dashboard
+-- In production you would restrict this but for now keep it open
+create policy "Public read feedback"
+  on feedback for select using (true);
+```
+
+---
+
+**STEP 2 — DYNAMIC RESTAURANT FUNNEL PAGE**
+
+Create: app/r/[slug]/page.jsx
+
+This is the most important page. Every customer lands here after scanning the QR code. Here is exactly what it must do:
+
+When the page loads use the slug from the URL to fetch the matching restaurant from Supabase. This should be a server component fetch so the page loads fast with no loading spinner for the customer.
+
+If no restaurant matches the slug or if the restaurant's active field is false then show a clean centered page that says "This page is not available" with the Stellr logo at the bottom.
+
+If the restaurant is found render the funnel in stages using React state. The page has three stages: rating stage, complaint stage, and thank you stage.
+
+**Rating stage:**
+Show the restaurant's logo centered at the top if logo_url exists. Below it show their name in large bold text. Below that show the question "How was your experience at [name] today?" in clear readable text. Below that show five buttons stacked vertically each taking full width and easy to tap on a phone. The buttons are: Excellent, Good, It was okay, Not great, and Terrible. Style them cleanly with the restaurant's page feeling premium and trustworthy, not cheap.
+
+When the customer taps Excellent or Good: save a feedback row to Supabase with the restaurant_id, the rating value, and redirected_to_google set to true. Then immediately redirect the customer to the restaurant's google_review_url. Open it in the same tab so the Google review page takes over.
+
+When the customer taps It was okay, Not great, or Terrible: save a feedback row to Supabase with the rating and redirected_to_google as false. Then move to the complaint stage without reloading the page.
+
+**Complaint stage:**
+Show a heading that says "We are sorry to hear that. Please tell us what happened so we can make it right." Below that show a text area where they can write their complaint. It should be optional not required. Below that show checkboxes so they can select what the complaint is about. The checkbox options are: Food Quality, Staff Behaviour, Service Speed, Cleanliness, Pricing, Something else. Below that show a single submit button. When submitted update the feedback row in Supabase with the complaint_text and complaint_tags array. Move to the thank you stage.
+
+**Thank you stage:**
+Show a simple warm message: "Thank you for your feedback. We have passed this on to the team and they will look into it." Show the restaurant logo again if it exists. Show stellr.biz in small text at the very bottom.
+
+The entire page must be fully mobile optimised. Large tap targets, readable font sizes, no horizontal scrolling, centered layout with max width of 480px and auto margins.
+
+---
+
+**STEP 3 — ONBOARDING PAGE AT /ONBOARD**
+
+Create: app/onboard/page.jsx
+
+This is how we add new restaurants to the system. It is for internal use only.
+
+When the page loads show a simple password field and a submit button. The password must match the ONBOARD_PASSWORD environment variable. Store the authenticated state in sessionStorage so refreshing the page does not log them out.
+
+After correct password is entered show a form with the following fields. All are text inputs unless noted:
+- Restaurant name (required)
+- Slug (required) — show helper text that says "Lowercase only, no spaces, use hyphens. This becomes their URL: stellr.biz/r/[slug]". As the user types the name auto-suggest a slug by converting to lowercase and replacing spaces with hyphens. Let them override it manually.
+- Logo URL (optional) — a text input for the full image URL
+- Google review URL (required) — show helper text that says "Go to Google Maps, find the restaurant, click Write a review, copy the URL from your browser address bar"
+- Owner name (optional)
+- Owner email (optional)
+- Owner WhatsApp (optional) — show helper text: "Include country code, no plus sign, no spaces. Example: 923001234567"
+- Active toggle — a toggle switch defaulting to on
+
+When submitted insert the row into Supabase. If the slug already exists show an error saying "This slug is already taken. Please choose a different one." If successful show a success panel with: the restaurant name, their full funnel URL as a clickable link (stellr.biz/r/[slug]), and a note saying "Print a QR code pointing to this URL and give it to the restaurant." Also show a button to add another restaurant which resets the form.
+
+---
+
+**STEP 4 — INTERNAL DASHBOARD AT /DASHBOARD**
+
+Create: app/dashboard/page.jsx
+
+This is our internal tool for monitoring all restaurants. Restaurant owners never see this.
+
+Same password protection as the onboard page but using DASHBOARD_PASSWORD. Store authenticated state in sessionStorage.
+
+After login show a top navigation bar with the Stellr logo on the left and a logout button on the right. Logging out clears sessionStorage and returns to the password screen.
+
+**Main view — restaurant list:**
+Show all restaurants from Supabase in a clean list or card grid. For each restaurant show: their name, their slug, their logo if it exists, a count of total feedback received all time, a count of complaints received this week (rating is okay, poor, or terrible and created_at is within the last 7 days), and an active or inactive badge. Clicking a restaurant opens the detail view.
+
+**Detail view — single restaurant:**
+Show a back button to return to the list. Show the restaurant's name and logo. Show four summary numbers at the top: total reviews all time, total this week, redirected to Google all time, total complaints this week. Below that show a list of all feedback entries sorted by newest first. For each entry show: the rating as a coloured badge (green for excellent and good, yellow for okay, red for poor and terrible), the complaint tags as small chips if they exist, the complaint text if it exists, and the date and time. Add a simple filter so they can view all feedback or complaints only or redirected to Google only.
+
+**Weekly report generator:**
+Below the feedback list show a button that says Generate Weekly Report. When clicked generate a plain text report formatted like this:
+
+```
+STELLR WEEKLY REPORT
+Restaurant: [name]
+Week ending: [date]
+
+SUMMARY
+Total interactions this week: [number]
+Sent to Google reviews: [number]
+Private complaints received: [number]
+
+COMPLAINTS BREAKDOWN
+Most common issue: [most frequent tag]
+Food Quality complaints: [number]
+Staff Behaviour complaints: [number]
+Service Speed complaints: [number]
+Cleanliness complaints: [number]
+Pricing complaints: [number]
+
+COMPLAINT DETAILS
+[list each complaint with date and text]
+
+Powered by Stellr — stellr.biz
+```
+
+Show this report in a text area so it can be selected and copied. Add a copy to clipboard button next to it. This is what we paste into WhatsApp for the restaurant owner each week.
+
+---
+
+**STEP 5 — QR CODE LOGIC**
+
+There is no QR code generation needed in the code. Each restaurant gets one physical QR code sticker. The QR code simply encodes their unique URL for example stellr.biz/r/chaaye-khana. When we onboard a new restaurant we go to any free QR code generator website, type in their URL, download the QR code image, and print it. The dynamic routing in Next.js handles everything automatically. One page file serves all restaurants. Adding 1000 restaurants does not create 1000 pages. It is one template that reads from the database.
+
+---
+
+**STEP 6 — PERFORMANCE AND RELIABILITY**
+
+The funnel page at /r/[slug] will be used by real customers on mobile so it must be fast and reliable. Use Next.js server components to fetch the restaurant data at the server level so there is no loading state visible to the customer. Add a revalidate of 3600 so the restaurant data is cached for one hour and does not hit Supabase on every single scan. If Supabase is down or slow the page should still show a graceful error rather than a blank white screen. Handle all fetch errors with try catch and show a friendly message.
+
+---
+
+**WHAT NOT TO DO**
+
+Do not install any authentication libraries. The password check is a simple string comparison against an environment variable. Do not use any UI component libraries. Use plain Tailwind CSS only. Do not modify any existing pages or the existing layout. Do not add any analytics or tracking. Do not change the existing color scheme on any existing page.
+
+---
+
+That is everything. Build all six steps completely with working code.

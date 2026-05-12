@@ -95,7 +95,7 @@ export default function Home() {
 
             <div style={{ borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "28px" }}>
               <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.32)", letterSpacing: "0.3px" }}>
-                Trusted by premium restaurants in Islamabad &amp; Lahore
+                Trusted by restaurants across 3 continents
               </p>
             </div>
           </div>
@@ -105,11 +105,22 @@ export default function Home() {
       {/* ─── STATS STRIP ─── */}
       <section style={{ background: "var(--mid-green)", padding: "88px 0" }}>
         <div className="container">
+          <div style={{ maxWidth: "600px", marginBottom: "48px" }}>
+            <h2 className="font-palatino" style={{
+              fontSize: "clamp(24px, 3vw, 36px)",
+              fontWeight: 400,
+              color: "var(--white)",
+              letterSpacing: "-0.3px",
+              margin: 0,
+              lineHeight: 1.25,
+            }}>
+              Most restaurants lose customers before they even walk in.
+            </h2>
+          </div>
           <div className="stats-grid" style={{ display: "flex", alignItems: "flex-start" }}>
             {[
-              { number: "88%", label: "Of diners", text: "check Google reviews before choosing a restaurant" },
-              { number: "12%", label: "Of restaurants", text: "actually respond to their reviews — be the exception" },
-              { number: "9%",  label: "Revenue uplift", text: "from a single 0.1 star increase in your Google rating" },
+              { number: "94%", label: "Of customers", text: "avoid a business after one unanswered negative review" },
+              { number: "73%", label: "Of people", text: "only trust reviews written in the last 30 days" },
             ].map((stat, i) => (
               <div key={i} className="stat-item" style={{ flex: 1 }}>
                 <div className="font-palatino" style={{
@@ -131,7 +142,7 @@ export default function Home() {
                 }}>
                   {stat.label}
                 </p>
-                <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.58)", lineHeight: 1.65, maxWidth: "240px" }}>
+                <p style={{ fontSize: "15px", color: "rgba(255,255,255,0.58)", lineHeight: 1.65, maxWidth: "280px" }}>
                   {stat.text}
                 </p>
               </div>
@@ -140,11 +151,58 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── HOW IT WORKS ─── */}
+      {/* ─── THE OPPORTUNITY ─── */}
+      <section style={{ background: "var(--forest)", padding: "100px 0", position: "relative", overflow: "hidden" }}>
+        <div className="container" style={{ position: "relative" }}>
+          <div style={{ textAlign: "center", maxWidth: "700px", marginInline: "auto" }}>
+            <span className="pill" style={{ background: "rgba(29,185,102,0.12)", color: "var(--sage)" }}>
+              The opportunity
+            </span>
+            <h2 className="font-palatino" style={{
+              fontSize: "clamp(28px, 3.5vw, 44px)",
+              fontWeight: 400,
+              color: "var(--white)",
+              letterSpacing: "-0.3px",
+              margin: "0 0 32px",
+              lineHeight: 1.2,
+            }}>
+              One star on Google is worth more than any ad campaign.
+            </h2>
+            <div className="font-palatino" style={{
+              fontSize: "clamp(56px, 6vw, 80px)",
+              fontWeight: 400,
+              color: "var(--sage)",
+              lineHeight: 1,
+              marginBottom: "16px",
+            }}>
+              5–9%
+            </div>
+            <p style={{
+              fontSize: "17px",
+              color: "rgba(255,255,255,0.55)",
+              lineHeight: 1.7,
+              maxWidth: "480px",
+              marginInline: "auto",
+            }}>
+              revenue increase for every one-star improvement on Google.
+            </p>
+            <p style={{
+              fontSize: "12px",
+              color: "rgba(255,255,255,0.25)",
+              fontFamily: "system-ui",
+              marginTop: "12px",
+            }}>
+              Harvard Business School
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── WHAT WE DO ─── */}
       <section id="how-it-works" className="section" style={{ background: "var(--petal)" }}>
         <div className="container">
           <div style={{ textAlign: "center", marginBottom: "72px" }}>
-            <span className="pill">How it works</span>
+            <span className="pill">What we do</span>
             <h2 className="font-palatino" style={{
               fontSize: "clamp(28px, 3.5vw, 44px)",
               fontWeight: 400,
@@ -152,17 +210,18 @@ export default function Home() {
               letterSpacing: "-0.3px",
               margin: 0,
             }}>
-              Three steps to a flawless reputation
+              We manage your Google reputation<br />so you can focus on your food.
             </h2>
           </div>
 
-          <div className="steps-grid" style={{ display: "flex", gap: "24px" }}>
+          <div className="steps-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "24px" }}>
             {[
-              { n: "01", title: "We set you up", body: "We onboard your restaurant, learn your voice, and install your QR stands on every table." },
-              { n: "02", title: "AI handles the reviews", body: "Every Google review gets a personalised, on-brand response within hours. No delays, no copy-paste replies." },
-              { n: "03", title: "Your rating climbs", body: "More reviews come in, all get answered, and Google rewards you with higher visibility." },
+              { n: "01", title: "QR Review Collection", body: "Custom QR codes on your tables and bills. Customers scan and leave a Google review in seconds. Simple and fast." },
+              { n: "02", title: "Smart Review Funnel", body: "Happy customers go to Google. Unhappy customers give you private feedback first. It never goes public." },
+              { n: "03", title: "Professional Responses", body: "We respond to every review on your behalf, professionally, within 24 hours. In English and Urdu." },
+              { n: "04", title: "Reputation Dashboard", body: "All your reviews in one place, with weekly reports and AI summaries of what customers are saying." },
             ].map((step, i) => (
-              <div key={i} className="card" style={{ flex: 1, overflow: "hidden" }}>
+              <div key={i} className="card" style={{ overflow: "hidden" }}>
                 <div className="font-palatino" style={{
                   fontSize: "100px",
                   fontWeight: 400,
@@ -193,11 +252,82 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── FEATURES ─── */}
-      <section id="features" className="section" style={{ background: "var(--white)" }}>
+      {/* ─── HOW IT WORKS FLOW ─── */}
+      <section className="section" style={{ background: "var(--white)" }}>
         <div className="container">
           <div style={{ textAlign: "center", marginBottom: "72px" }}>
-            <span className="pill">Features</span>
+            <span className="pill">How it works</span>
+            <h2 className="font-palatino" style={{
+              fontSize: "clamp(28px, 3.5vw, 44px)",
+              fontWeight: 400,
+              color: "var(--forest)",
+              letterSpacing: "-0.3px",
+              margin: "0 0 12px",
+            }}>
+              Simple for your customers.
+            </h2>
+            <p style={{ fontSize: "18px", color: "var(--moss)", margin: 0 }}>
+              Powerful for your reputation.
+            </p>
+          </div>
+
+          <div className="steps-grid" style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
+            {[
+              { n: "1", title: "Scan", body: "Customer scans QR code on table" },
+              { n: "2", title: "Rate", body: "Rates their experience" },
+              { n: "3", title: "Publish", body: "4–5 stars go straight to Google" },
+              { n: "4", title: "Protect", body: "1–3 stars go to private feedback" },
+              { n: "5", title: "Report", body: "You receive a WhatsApp report" },
+            ].map((step, i) => (
+              <div key={i} style={{
+                flex: "0 0 180px",
+                textAlign: "center",
+                padding: "28px 16px",
+                background: "var(--petal)",
+                borderRadius: "12px",
+                border: "1px solid var(--divider)",
+              }}>
+                <div className="font-palatino" style={{
+                  fontSize: "36px",
+                  fontWeight: 400,
+                  color: "var(--sage)",
+                  lineHeight: 1,
+                  marginBottom: "12px",
+                }}>
+                  {step.n}
+                </div>
+                <h3 style={{
+                  fontSize: "16px",
+                  fontWeight: 600,
+                  color: "var(--forest)",
+                  marginBottom: "8px",
+                  fontFamily: "system-ui",
+                }}>
+                  {step.title}
+                </h3>
+                <p style={{ fontSize: "13px", color: "var(--moss)", lineHeight: 1.5, margin: 0 }}>
+                  {step.body}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          <div style={{ marginTop: "48px", textAlign: "center", display: "flex", flexDirection: "column", gap: "12px", maxWidth: "500px", marginInline: "auto" }}>
+            <p style={{ fontSize: "15px", color: "var(--forest)", lineHeight: 1.7 }}>
+              ✓ Positive reviews build your Google rating automatically
+            </p>
+            <p style={{ fontSize: "15px", color: "var(--forest)", lineHeight: 1.7 }}>
+              ✓ Complaints stay private until you fix them
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── WHY STELLR ─── */}
+      <section id="features" className="section" style={{ background: "var(--petal)" }}>
+        <div className="container">
+          <div style={{ textAlign: "center", marginBottom: "72px" }}>
+            <span className="pill">Why Stellr</span>
             <h2 className="font-palatino" style={{
               fontSize: "clamp(28px, 3.5vw, 44px)",
               fontWeight: 400,
@@ -205,41 +335,41 @@ export default function Home() {
               letterSpacing: "-0.3px",
               margin: 0,
             }}>
-              Everything your reputation needs
+              Built for restaurant owners<br />who take reputation seriously.
             </h2>
           </div>
 
           <div className="features-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "24px" }}>
             {[
               {
-                icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1DB966" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>,
-                title: "AI review replies",
-                body: "Automated, personalised responses in your restaurant's tone — generated for every review.",
+                icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1DB966" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/></svg>,
+                title: "No password needed.",
+                body: "You simply add us as a Manager on Google. You stay in full control. Remove us anytime.",
               },
               {
-                icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1DB966" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>,
-                title: "QR table stands",
-                body: "Premium acrylic stands on every table drive more reviews passively, night after night.",
+                icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1DB966" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>,
+                title: "Always professional.",
+                body: "Every response is written in the right tone, on-brand, within 24 hours of every review going live.",
+              },
+              {
+                icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1DB966" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>,
+                title: "Human, not robotic.",
+                body: "AI assists our team. But every response is written by a person who understands your restaurant.",
+              },
+              {
+                icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1DB966" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>,
+                title: "Results you can see.",
+                body: "Your rating climbs month by month. You get a clear weekly report of what your customers are saying.",
               },
               {
                 icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1DB966" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>,
-                title: "White-label option",
-                body: "Premium tier with your branding only — no Stellr logo visible anywhere.",
-              },
-              {
-                icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1DB966" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>,
-                title: "Monthly report",
-                body: "An auto-generated reputation report sent to you every month — clear, readable, actionable.",
-              },
-              {
-                icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1DB966" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>,
-                title: "Negative review alerts",
-                body: "Get notified the moment a low rating comes in, so you can act before it spreads.",
+                title: "Zero setup hassle.",
+                body: "We handle everything: QR code design, dashboard setup, onboarding. You just focus on the food.",
               },
               {
                 icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1DB966" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>,
-                title: "Voice training",
-                body: "AI learns your restaurant's personality during onboarding. Set once, never touch again.",
+                title: "First mover advantage.",
+                body: "Most restaurants still manage reviews manually. The ones that automate it first own their market position.",
               },
             ].map((feature, i) => (
               <div key={i} className="card" style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
@@ -267,204 +397,60 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── MARKET SIZE ─── */}
-      <section style={{ background: "var(--forest)", padding: "100px 0", position: "relative", overflow: "hidden" }}>
-        {/* Faint watermark star, bottom-left */}
-        <div style={{
-          position: "absolute",
-          left: "-120px",
-          bottom: "-100px",
-          opacity: 0.035,
-          pointerEvents: "none",
-          userSelect: "none",
-        }}>
-          <svg width="500" height="500" viewBox="0 0 32 32" fill="none">
-            <polygon points="16,3 19.5,11.5 28.5,12.5 22,18.5 23.8,27.5 16,23 8.2,27.5 10,18.5 3.5,12.5 12.5,11.5"
-              fill="#1DB966" strokeLinejoin="round" />
-          </svg>
-        </div>
-
-        <div className="container" style={{ position: "relative" }}>
-          <div style={{ maxWidth: "600px", marginBottom: "64px" }}>
-            <span className="pill" style={{ background: "rgba(29,185,102,0.12)", color: "var(--sage)" }}>
-              The opportunity
-            </span>
+      {/* ─── THE IMPACT ─── */}
+      <section className="section" style={{ background: "var(--forest)" }}>
+        <div className="container">
+          <div style={{ textAlign: "center", marginBottom: "72px", maxWidth: "640px", marginInline: "auto" }}>
+            <span className="pill" style={{ background: "rgba(29,185,102,0.12)", color: "var(--sage)" }}>The impact</span>
             <h2 className="font-palatino" style={{
               fontSize: "clamp(28px, 3.5vw, 44px)",
               fontWeight: 400,
               color: "var(--white)",
               letterSpacing: "-0.3px",
-              margin: 0,
+              margin: "0 0 20px",
               lineHeight: 1.2,
             }}>
-              A massive market — almost entirely unmanaged.
+              When you manage your reputation, your revenue follows.
             </h2>
           </div>
 
-          <div className="market-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0" }}>
             {[
               {
-                figure: "$4B",
-                label: "Pakistan restaurant industry",
-                body: "The total size of the food service sector — one of the fastest-growing consumer categories in the country.",
-                source: "Pakistan Bureau of Statistics, 2023",
+                stat: "+18%",
+                body: "more revenue earned by businesses that respond to every review",
               },
               {
-                figure: "80,000+",
-                label: "Registered restaurants",
-                body: "The number of food businesses operating in Pakistan's major cities. Fewer than 5% have any structured reputation management.",
-                source: "REAP / FBR industry estimates",
+                stat: "+31%",
+                body: "more a customer spends at a business with excellent reviews",
               },
               {
-                figure: "$9.5B",
-                label: "Global ORM market by 2028",
-                body: "Online reputation management is growing at 13% annually worldwide — and Pakistan is at the start of that curve.",
-                source: "Grand View Research, 2024",
+                stat: "+45%",
+                body: "more likely to visit a restaurant that responds to negative reviews",
               },
             ].map((item, i) => (
               <div key={i} style={{
-                padding: "40px 40px 40px 0",
+                textAlign: "center",
+                padding: "40px 32px",
                 borderRight: i < 2 ? "1px solid rgba(255,255,255,0.07)" : "none",
-                paddingRight: i < 2 ? "40px" : "0",
-                paddingLeft: i > 0 ? "40px" : "0",
               }}>
                 <div className="font-palatino" style={{
-                  fontSize: "clamp(40px, 4vw, 56px)",
+                  fontSize: "clamp(48px, 5vw, 64px)",
                   fontWeight: 400,
                   color: "var(--sage)",
                   lineHeight: 1,
-                  marginBottom: "12px",
+                  marginBottom: "16px",
                   letterSpacing: "-1px",
                 }}>
-                  {item.figure}
+                  {item.stat}
                 </div>
-                <p style={{
-                  fontSize: "11px",
-                  letterSpacing: "1.5px",
-                  textTransform: "uppercase",
-                  color: "rgba(255,255,255,0.3)",
-                  marginBottom: "14px",
-                  fontFamily: "system-ui",
-                }}>
-                  {item.label}
-                </p>
                 <p style={{
                   fontSize: "15px",
                   color: "rgba(255,255,255,0.55)",
                   lineHeight: 1.7,
-                  marginBottom: "16px",
+                  maxWidth: "240px",
+                  marginInline: "auto",
                 }}>
-                  {item.body}
-                </p>
-                <p style={{
-                  fontSize: "11px",
-                  color: "rgba(255,255,255,0.2)",
-                  fontFamily: "system-ui",
-                  letterSpacing: "0.3px",
-                }}>
-                  {item.source}
-                </p>
-              </div>
-            ))}
-          </div>
-
-          <div style={{
-            marginTop: "64px",
-            paddingTop: "40px",
-            borderTop: "1px solid rgba(255,255,255,0.07)",
-            maxWidth: "720px",
-          }}>
-            <p style={{
-              fontSize: "18px",
-              color: "rgba(255,255,255,0.45)",
-              lineHeight: 1.78,
-              fontFamily: "'Palatino Linotype', Palatino, Georgia, serif",
-              fontStyle: "italic",
-            }}>
-              &ldquo;Every premium restaurant in Islamabad, Lahore, and Karachi is competing for the same upper-end diner — and that diner checks Google before they book. Stellr gives you the edge.&rdquo;
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── RESULTS ─── */}
-      <section className="section" style={{ background: "var(--white)" }}>
-        <div className="container">
-          <div style={{ textAlign: "center", marginBottom: "72px", maxWidth: "640px", marginInline: "auto" }}>
-            <span className="pill">Results</span>
-            <h2 className="font-palatino" style={{
-              fontSize: "clamp(28px, 3.5vw, 44px)",
-              fontWeight: 400,
-              color: "var(--forest)",
-              letterSpacing: "-0.3px",
-              margin: "0 0 20px",
-              lineHeight: 1.2,
-            }}>
-              Built to move the numbers that matter.
-            </h2>
-            <p style={{ fontSize: "16px", color: "var(--moss)", lineHeight: 1.7, margin: 0 }}>
-              Stellr isn&apos;t a chatbot. It&apos;s a system for growing covers, protecting your rating, and turning first-time diners into regulars.
-            </p>
-          </div>
-
-          <div className="results-grid" style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: "24px" }}>
-            {[
-              {
-                stat: "+9%",
-                statLabel: "Revenue per 0.1★ rating",
-                title: "More bookings, higher spend.",
-                body: "Diners pick higher-rated restaurants and pay more once they arrive. Every Stellr-driven star translates to measurable top-line growth.",
-              },
-              {
-                stat: "3×",
-                statLabel: "Return-visit lift",
-                title: "Turn one-time diners into regulars.",
-                body: "Personal, on-brand replies make every guest feel seen. That&apos;s the single biggest driver of repeat visits — and the cheapest customer retention you can buy.",
-              },
-              {
-                stat: "<2hr",
-                statLabel: "Negative review response",
-                title: "Stop churn before it spreads.",
-                body: "One unanswered 1-star review can cost you 30 future covers. We alert you the moment it lands and respond fast — before the damage compounds.",
-              },
-              {
-                stat: "0",
-                statLabel: "Hours of staff time",
-                title: "Your team focuses on service.",
-                body: "No more managers writing review replies on their phones. Stellr handles the keyboard so your floor staff handle the guest in front of them.",
-              },
-            ].map((item, i) => (
-              <div key={i} className="card" style={{ padding: "36px 36px" }}>
-                <div style={{ display: "flex", alignItems: "baseline", gap: "16px", marginBottom: "20px", paddingBottom: "20px", borderBottom: "1px solid var(--divider)" }}>
-                  <span className="font-palatino" style={{
-                    fontSize: "44px",
-                    fontWeight: 400,
-                    color: "var(--sage)",
-                    lineHeight: 1,
-                    letterSpacing: "-1px",
-                  }}>
-                    {item.stat}
-                  </span>
-                  <span style={{
-                    fontSize: "11px",
-                    letterSpacing: "1.3px",
-                    textTransform: "uppercase",
-                    color: "var(--moss)",
-                    fontFamily: "system-ui",
-                  }}>
-                    {item.statLabel}
-                  </span>
-                </div>
-                <h3 className="font-palatino" style={{
-                  fontSize: "22px",
-                  fontWeight: 400,
-                  color: "var(--forest)",
-                  margin: "0 0 12px",
-                  lineHeight: 1.3,
-                }}>
-                  {item.title}
-                </h3>
-                <p style={{ fontSize: "15px", color: "var(--moss)", lineHeight: 1.7, margin: 0 }}>
                   {item.body}
                 </p>
               </div>
@@ -625,7 +611,7 @@ export default function Home() {
             maxWidth: "480px",
             margin: "0 auto 44px",
           }}>
-            Join premium restaurants across Pakistan who let Stellr handle the reviews while they focus on the food.
+            Join restaurants worldwide who let Stellr handle the reviews while they focus on the food.
           </p>
           <a href="/get-started" className="btn-primary" style={{ background: "var(--sage)", color: "var(--forest)" }}>
             Get started today
@@ -690,7 +676,7 @@ export default function Home() {
           </p>
 
           <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.3)" }}>
-            © 2025 Stellr
+            © 2026 Stellr
           </p>
         </div>
       </footer>
