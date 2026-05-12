@@ -100,17 +100,6 @@ export default function GetStarted() {
     const whatsapp = data.get("whatsapp") as string;
     const message = data.get("message") as string;
 
-    const subject = `Stellr enquiry — ${restaurant}`;
-    const body = [
-      `Name: ${name}`,
-      `Restaurant: ${restaurant}`,
-      `Country: ${country}`,
-      `City: ${city}`,
-      `WhatsApp: ${whatsappCode} ${whatsapp}`,
-      `Plan interest: ${plan === "white-label" ? "White-label" : "Standard"}`,
-      message ? `\nMessage:\n${message}` : "",
-    ].filter(Boolean).join("\n");
-
     // Save to database
     try {
       await fetch("/api/enquiries", {
@@ -128,7 +117,6 @@ export default function GetStarted() {
       });
     } catch {}
 
-    window.location.href = `mailto:bilal@stellr.biz?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setSubmitted(true);
   }
 
@@ -418,7 +406,6 @@ export default function GetStarted() {
                   lineHeight: 1.6,
                   margin: 0,
                 }}>
-                  This opens your email app with your details pre-filled.<br/>
                   We respond within 24 hours.
                 </p>
               </div>
