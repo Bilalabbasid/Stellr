@@ -91,7 +91,7 @@ export default function GetStarted() {
     if (found) setWhatsappCode(found.code);
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const name = data.get("name") as string;
@@ -110,6 +110,23 @@ export default function GetStarted() {
       `Plan interest: ${plan === "white-label" ? "White-label" : "Standard"}`,
       message ? `\nMessage:\n${message}` : "",
     ].filter(Boolean).join("\n");
+
+    // Save to database
+    try {
+      await fetch("/api/enquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          restaurant,
+          country,
+          city,
+          whatsapp: `${whatsappCode} ${whatsapp}`,
+          plan: plan === "white-label" ? "White-label" : "Standard",
+          message,
+        }),
+      });
+    } catch {}
 
     window.location.href = `mailto:bilal@stellr.biz?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setSubmitted(true);

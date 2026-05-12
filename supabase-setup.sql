@@ -54,3 +54,31 @@ create policy "Public read feedback"
 -- Allow updating feedback (for adding complaint details after initial insert)
 create policy "Public update feedback"
   on feedback for update using (true);
+
+-- Enquiries table
+-- Every "Get Started" form submission is stored here
+create table enquiries (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  restaurant text not null,
+  country text,
+  city text,
+  whatsapp text,
+  plan text,
+  message text,
+  status text default 'new',
+  created_at timestamp with time zone default now()
+);
+
+create index on enquiries (created_at desc);
+
+alter table enquiries enable row level security;
+
+create policy "Public insert enquiries"
+  on enquiries for insert with check (true);
+
+create policy "Public read enquiries"
+  on enquiries for select using (true);
+
+create policy "Public update enquiries"
+  on enquiries for update using (true);

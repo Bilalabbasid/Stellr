@@ -12,6 +12,7 @@ export default function DashboardPage() {
   const [selectedRestaurant, setSelectedRestaurant] = useState(null)
   const [filter, setFilter] = useState('all')
   const [loading, setLoading] = useState(true)
+  const [tab, setTab] = useState('restaurants')
 
   useEffect(() => {
     if (sessionStorage.getItem('stellr_dashboard_auth') === 'true') {
@@ -144,46 +145,67 @@ export default function DashboardPage() {
       </nav>
 
       <div className="max-w-4xl mx-auto px-4 py-6">
-        <h1 className="text-xl font-bold text-gray-900 mb-4">Restaurants</h1>
-        {loading ? (
-          <p className="text-gray-500">Loading...</p>
-        ) : restaurants.length === 0 ? (
-          <p className="text-gray-500">No restaurants yet. Use /onboard to add one.</p>
-        ) : (
-          <div className="grid gap-3">
-            {restaurants.map((r) => {
-              const stats = getRestaurantStats(r.id)
-              return (
-                <button
-                  key={r.id}
-                  onClick={() => setSelectedRestaurant(r)}
-                  className="w-full text-left bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:border-gray-300 transition-colors"
-                >
-                  <div className="flex items-center gap-3">
-                    {r.logo_url && (
-                      <img src={r.logo_url} alt={r.name} className="w-10 h-10 rounded-full object-contain" />
-                    )}
-                    <div className="flex-1 min-w-0">
-                      <div className="flex items-center gap-2">
-                        <span className="font-medium text-gray-900 truncate">{r.name}</span>
-                        <span className={`text-xs px-2 py-0.5 rounded-full ${r.active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
-                          {r.active ? 'Active' : 'Inactive'}
-                        </span>
+        {/* Tabs */}
+        <div className="flex gap-2 mb-6">
+          {['restaurants', 'enquiries'].map((t) => (
+            <button
+              key={t}
+              onClick={() => setTab(t)}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                tab === t ? 'bg-gray-900 text-white' : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+              }`}
+            >
+              {t === 'restaurants' ? 'Restaurants' : 'Enquiries'}
+            </button>
+          ))}
+        </div>
+
+        {tab === 'restaurants' && (
+          <>
+            <h1 className="text-xl font-bold text-gray-900 mb-4">Restaurants</h1>
+            {loading ? (
+              <p className="text-gray-500">Loading...</p>
+            ) : restaurants.length === 0 ? (
+              <p className="text-gray-500">No restaurants yet. Use /onboard to add one.</p>
+            ) : (
+              <div className="grid gap-3">
+                {restaurants.map((r) => {
+                  const stats = getRestaurantStats(r.id)
+                  return (
+                    <button
+                      key={r.id}
+                      onClick={() => setSelectedRestaurant(r)}
+                      className="w-full text-left bg-white rounded-xl p-4 shadow-sm border border-gray-100 hover:border-gray-300 transition-colors"
+                    >
+                      <div className="flex items-center gap-3">
+                        {r.logo_url && (
+                          <img src={r.logo_url} alt={r.name} className="w-10 h-10 rounded-full object-contain" />
+                        )}
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium text-gray-900 truncate">{r.name}</span>
+                            <span className={`text-xs px-2 py-0.5 rounded-full ${r.active ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
+                              {r.active ? 'Active' : 'Inactive'}
+                            </span>
+                          </div>
+                          <p className="text-sm text-gray-500">/r/{r.slug}</p>
+                        </div>
+                        <div className="text-right text-sm">
+                          <p className="text-gray-600">{stats.total} total</p>
+                          {stats.complaintsThisWeek > 0 && (
+                            <p className="text-red-600">{stats.complaintsThisWeek} complaints this week</p>
+                          )}
+                        </div>
                       </div>
-                      <p className="text-sm text-gray-500">/r/{r.slug}</p>
-                    </div>
-                    <div className="text-right text-sm">
-                      <p className="text-gray-600">{stats.total} total</p>
-                      {stats.complaintsThisWeek > 0 && (
-                        <p className="text-red-600">{stats.complaintsThisWeek} complaints this week</p>
-                      )}
-                    </div>
-                  </div>
-                </button>
-              )
-            })}
-          </div>
+                    </button>
+                  )
+                })}
+              </div>
+            )}
+          </>
         )}
+
+        {tab === 'enquiries' && <EnquiriesView />}
       </div>
     </div>
   )
@@ -397,5 +419,128 @@ Powered by Stellr — stellr.biz`
         </div>
       </div>
     </div>
+  )
+}
+
+function EnquiriesView() {
+  const [enquiries, setEnquiries] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [statusFilter, setStatusFilter] = useState('all')
+
+  useEffect(() => {
+    loadEnquiries()
+  }, [])
+
+  async function loadEnquiries() {
+    setLoading(true)
+    const { data } = await supabase
+      .from('enquiries')
+      .select('*')
+      .order('created_at', { ascending: false })
+    setEnquiries(data || [])
+    setLoading(false)
+  }
+
+  async function updateStatus(id, newStatus) {
+    await supabase.from('enquiries').update({ status: newStatus }).eq('id', id)
+    setEnquiries((prev) =>
+      prev.map((e) => (e.id === id ? { ...e, status: newStatus } : e))
+    )
+  }
+
+  const filtered = statusFilter === 'all'
+    ? enquiries
+    : enquiries.filter((e) => e.status === statusFilter)
+
+  const statusColors = {
+    new: 'bg-blue-100 text-blue-700',
+    contacted: 'bg-yellow-100 text-yellow-700',
+    converted: 'bg-green-100 text-green-700',
+    closed: 'bg-gray-100 text-gray-500',
+  }
+
+  if (loading) return <p className="text-gray-500">Loading enquiries...</p>
+
+  return (
+    <>
+      <div className="flex items-center justify-between mb-4">
+        <h1 className="text-xl font-bold text-gray-900">Enquiries ({enquiries.length})</h1>
+        <button
+          onClick={loadEnquiries}
+          className="text-sm text-gray-600 hover:text-gray-900"
+        >
+          Refresh
+        </button>
+      </div>
+
+      <div className="flex gap-2 mb-4 flex-wrap">
+        {['all', 'new', 'contacted', 'converted', 'closed'].map((s) => (
+          <button
+            key={s}
+            onClick={() => setStatusFilter(s)}
+            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+              statusFilter === s
+                ? 'bg-gray-900 text-white'
+                : 'bg-white text-gray-600 border border-gray-200 hover:bg-gray-50'
+            }`}
+          >
+            {s.charAt(0).toUpperCase() + s.slice(1)}
+            {s !== 'all' && ` (${enquiries.filter((e) => e.status === s).length})`}
+          </button>
+        ))}
+      </div>
+
+      {filtered.length === 0 ? (
+        <p className="text-gray-500 text-sm">No enquiries found.</p>
+      ) : (
+        <div className="space-y-3">
+          {filtered.map((e) => (
+            <div key={e.id} className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+              <div className="flex items-start justify-between gap-2 mb-2">
+                <div>
+                  <h3 className="font-medium text-gray-900">{e.name}</h3>
+                  <p className="text-sm text-gray-600">{e.restaurant}</p>
+                </div>
+                <span className="text-xs text-gray-400 whitespace-nowrap">
+                  {new Date(e.created_at).toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
+                </span>
+              </div>
+
+              <div className="flex flex-wrap gap-2 text-sm text-gray-600 mb-3">
+                {e.country && <span>📍 {e.country}{e.city ? `, ${e.city}` : ''}</span>}
+                {e.whatsapp && <span>📱 {e.whatsapp}</span>}
+                {e.plan && <span>📦 {e.plan}</span>}
+              </div>
+
+              {e.message && (
+                <p className="text-sm text-gray-700 bg-gray-50 rounded-lg p-3 mb-3">{e.message}</p>
+              )}
+
+              <div className="flex items-center gap-2">
+                <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${statusColors[e.status] || statusColors.new}`}>
+                  {e.status || 'new'}
+                </span>
+                <select
+                  value={e.status || 'new'}
+                  onChange={(ev) => updateStatus(e.id, ev.target.value)}
+                  className="text-xs border border-gray-200 rounded-lg px-2 py-1 text-gray-600 focus:outline-none focus:ring-1 focus:ring-gray-300"
+                >
+                  <option value="new">New</option>
+                  <option value="contacted">Contacted</option>
+                  <option value="converted">Converted</option>
+                  <option value="closed">Closed</option>
+                </select>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </>
   )
 }
