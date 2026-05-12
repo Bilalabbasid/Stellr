@@ -224,11 +224,10 @@ export default function GetStarted() {
                 </svg>
               </div>
               <h2 className="font-palatino" style={{ fontSize: "26px", fontWeight: 400, color: "var(--forest)", marginBottom: "12px" }}>
-                Your email app should open shortly.
+                Enquiry submitted!
               </h2>
               <p style={{ fontSize: "15px", color: "var(--moss)", lineHeight: 1.65, marginBottom: "28px" }}>
-                If it didn&apos;t, email us directly at{" "}
-                <a href="mailto:bilal@stellr.biz" style={{ color: "var(--sage)", textDecoration: "none" }}>bilal@stellr.biz</a>.
+                Thanks for reaching out. We&apos;ll get back to you within 24 hours.
               </p>
               <a href="/" style={{
                 fontSize: "13px",
