@@ -17,6 +17,7 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 body {
@@ -26,6 +27,7 @@ body {
   -webkit-font-smoothing: antialiased;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
 .font-palatino {
@@ -259,6 +261,34 @@ textarea.form-input {
 
   .features-grid {
     grid-template-columns: 1fr !important;
+  }
+
+  .steps-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .flow-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+
+  .flow-step {
+    flex: none !important;
+  }
+
+  .impact-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .impact-grid > div {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+    padding: 28px 16px !important;
+  }
+
+  .impact-grid > div:last-child {
+    border-bottom: none;
   }
 
   .market-grid {

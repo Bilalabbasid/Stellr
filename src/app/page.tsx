@@ -271,7 +271,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="steps-grid" style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
+          <div className="steps-grid flow-grid" style={{ display: "flex", gap: "16px", justifyContent: "center", flexWrap: "wrap" }}>
             {[
               { n: "1", title: "Scan", body: "Customer scans QR code on table" },
               { n: "2", title: "Rate", body: "Rates their experience" },
@@ -279,8 +279,7 @@ export default function Home() {
               { n: "4", title: "Protect", body: "1–3 stars go to private feedback" },
               { n: "5", title: "Report", body: "You receive a WhatsApp report" },
             ].map((step, i) => (
-              <div key={i} style={{
-                flex: "0 0 180px",
+              <div key={i} className="flow-step" style={{
                 textAlign: "center",
                 padding: "28px 16px",
                 background: "var(--petal)",
@@ -414,7 +413,7 @@ export default function Home() {
             </h2>
           </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0" }}>
+          <div className="impact-grid" style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "0" }}>
             {[
               {
                 stat: "+18%",
