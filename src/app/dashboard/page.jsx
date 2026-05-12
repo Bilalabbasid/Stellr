@@ -384,6 +384,12 @@ Powered by Stellr — stellr.biz`
                 {f.complaint_text && (
                   <p className="text-sm text-gray-700 mt-2">{f.complaint_text}</p>
                 )}
+                {(f.customer_email || f.customer_phone) && (
+                  <div className="flex flex-wrap gap-3 mt-2 text-xs text-gray-500">
+                    {f.customer_email && <span>Email: {f.customer_email}</span>}
+                    {f.customer_phone && <span>Phone: {f.customer_phone}</span>}
+                  </div>
+                )}
               </div>
             ))
           )}

@@ -31,6 +31,10 @@ create table feedback (
   created_at timestamp with time zone default now()
 );
 
+-- Run this if the feedback table already exists:
+-- ALTER TABLE feedback ADD COLUMN customer_email text;
+-- ALTER TABLE feedback ADD COLUMN customer_phone text;
+
 -- Indexes for fast lookups
 create index on feedback (restaurant_id, created_at desc);
 create index on restaurants (slug);

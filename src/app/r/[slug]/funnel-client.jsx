@@ -25,6 +25,8 @@ export default function FunnelClient({ restaurant }) {
   const [feedbackId, setFeedbackId] = useState(null)
   const [complaintText, setComplaintText] = useState('')
   const [selectedTags, setSelectedTags] = useState([])
+  const [customerEmail, setCustomerEmail] = useState('')
+  const [customerPhone, setCustomerPhone] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
   async function handleRating(rating) {
@@ -73,6 +75,8 @@ export default function FunnelClient({ restaurant }) {
           .update({
             complaint_text: complaintText || null,
             complaint_tags: selectedTags.length > 0 ? selectedTags : null,
+            customer_email: customerEmail || null,
+            customer_phone: customerPhone || null,
           })
           .eq('id', feedbackId)
       }
@@ -158,6 +162,20 @@ export default function FunnelClient({ restaurant }) {
                   </button>
                 ))}
               </div>
+              <input
+                type="email"
+                value={customerEmail}
+                onChange={(e) => setCustomerEmail(e.target.value)}
+                placeholder="Your email (optional)"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl text-base focus:outline-none focus:ring-2 focus:ring-gray-300 mb-3"
+              />
+              <input
+                type="tel"
+                value={customerPhone}
+                onChange={(e) => setCustomerPhone(e.target.value)}
+                placeholder="Your phone number (optional)"
+                className="w-full px-4 py-3 border border-gray-200 rounded-xl text-base focus:outline-none focus:ring-2 focus:ring-gray-300 mb-4"
+              />
               <button
                 type="submit"
                 disabled={submitting}
