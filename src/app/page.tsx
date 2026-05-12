@@ -18,6 +18,7 @@ export default function Home() {
             <ul className="nav-links">
               <li><a href="#features">Features</a></li>
               <li><a href="#pricing">Pricing</a></li>
+              <li><a href="/blog">Blog</a></li>
               <li><a href="#contact">Contact</a></li>
             </ul>
             <a href="/get-started" className="btn-primary"
